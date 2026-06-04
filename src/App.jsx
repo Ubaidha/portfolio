@@ -20,9 +20,15 @@ import {
   FaChevronLeft,
   FaChevronRight,
   FaCheck,
+  FaExternalLinkAlt,
 } from "react-icons/fa"
 
-import cineverseHome from "./assets/home-hero.png"
+import cineverseHome from "./assets/cineverse/home-hero.png"
+import cineverseMovies from "./assets/cineverse/movie-sections.png"
+import cineverseTrailer from "./assets/cineverse/trailer-player.png"
+import cineverseWatchlist from "./assets/cineverse/watchlist-page.png"
+import cineverseLogin from "./assets/cineverse/login-page.png"
+import cineverseSignup from "./assets/cineverse/signup-page.png"
 import safewatchDashboard from "./assets/safewatch/dashboard-screen.jpeg"
 import safewatchLiveFeed from "./assets/safewatch/live-feed-screen.jpeg"
 import safewatchWeapon from "./assets/safewatch/weapon-detection-screen.jpeg"
@@ -63,6 +69,140 @@ const SAFEWATCH_SLIDES = [
   { src: safewatchLogin, alt: "Login screen", label: "Login" },
   { src: safewatchSignup, alt: "Sign up screen", label: "Sign Up" },
 ]
+
+const CINEVERSE_TECH = [
+  "React",
+  "Firebase",
+  "JavaScript",
+  "Tailwind CSS",
+  "TMDB API",
+]
+
+const CINEVERSE_HIGHLIGHTS = [
+  "Movie Discovery",
+  "Watchlist Management",
+  "Trailer Streaming",
+  "Authentication System",
+  "Responsive UI",
+]
+
+const CINEVERSE_GITHUB = "https://github.com/Ubaidha/CineVerse"
+const CINEVERSE_DEMO = "#"
+
+const CINEVERSE_SLIDES = [
+  { src: cineverseHome, alt: "CineVerse home hero", label: "Home" },
+  { src: cineverseMovies, alt: "Movie discovery sections", label: "Discover" },
+  { src: cineverseTrailer, alt: "Trailer player", label: "Trailers" },
+  { src: cineverseWatchlist, alt: "Watchlist page", label: "Watchlist" },
+  { src: cineverseLogin, alt: "Login screen", label: "Login" },
+  { src: cineverseSignup, alt: "Sign up screen", label: "Sign Up" },
+]
+
+function CineVerseLightbox({ index, onClose, onNavigate }) {
+  const slide = CINEVERSE_SLIDES[index]
+  const total = CINEVERSE_SLIDES.length
+
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === "Escape") onClose()
+      if (e.key === "ArrowLeft") onNavigate(-1)
+      if (e.key === "ArrowRight") onNavigate(1)
+    }
+    document.body.style.overflow = "hidden"
+    window.addEventListener("keydown", handleKey)
+    return () => {
+      document.body.style.overflow = ""
+      window.removeEventListener("keydown", handleKey)
+    }
+  }, [onClose, onNavigate])
+
+  return (
+    <motion.div
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${slide.label} screenshot`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6"
+      onClick={onClose}
+    >
+      <motion.div
+        className="absolute inset-0 bg-black/85 backdrop-blur-xl"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        aria-hidden
+      />
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.88 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.92 }}
+        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        className="relative z-10 flex w-full max-w-6xl flex-col items-center"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close lightbox"
+          className="absolute -top-2 right-0 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/60 text-white backdrop-blur-md transition hover:border-rose-400/50 hover:bg-rose-500/25 sm:-top-3 sm:h-11 sm:w-11"
+        >
+          <FaTimes className="text-lg" />
+        </button>
+
+        <p className="mb-3 text-center text-sm font-medium text-zinc-400 sm:mb-4">
+          {slide.label}{" "}
+          <span className="text-zinc-600">
+            {index + 1} / {total}
+          </span>
+        </p>
+
+        <div className="relative flex w-full items-center justify-center gap-2 sm:gap-4">
+          <button
+            type="button"
+            onClick={() => onNavigate(-1)}
+            aria-label="Previous screenshot"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 bg-black/60 text-white backdrop-blur-md transition hover:border-rose-400/50 hover:bg-rose-500/25 sm:h-12 sm:w-12"
+          >
+            <FaChevronLeft />
+          </button>
+
+          <div className="relative max-h-[75vh] min-h-0 flex-1 overflow-hidden rounded-xl border border-white/10 bg-black/40 shadow-2xl shadow-rose-950/50 sm:max-h-[82vh] sm:rounded-2xl">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.img
+                key={index}
+                src={slide.src}
+                alt={slide.alt}
+                initial={{ opacity: 0, scale: 0.94 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className="mx-auto max-h-[75vh] w-full object-contain sm:max-h-[82vh]"
+                draggable={false}
+              />
+            </AnimatePresence>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => onNavigate(1)}
+            aria-label="Next screenshot"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 bg-black/60 text-white backdrop-blur-md transition hover:border-rose-400/50 hover:bg-rose-500/25 sm:h-12 sm:w-12"
+          >
+            <FaChevronRight />
+          </button>
+        </div>
+
+        <p className="mt-4 hidden text-xs text-zinc-500 sm:block">
+          Click outside the image or press Esc to close
+        </p>
+      </motion.div>
+    </motion.div>
+  )
+}
 
 function SafeWatchLightbox({ index, onClose, onNavigate }) {
   const slide = SAFEWATCH_SLIDES[index]
@@ -576,6 +716,255 @@ function SafeWatchShowcase({ reduced }) {
   )
 }
 
+function CineVerseShowcase({ reduced }) {
+  const [active, setActive] = useState(0)
+  const [lightboxIndex, setLightboxIndex] = useState(null)
+  const total = CINEVERSE_SLIDES.length
+
+  const go = (dir) => {
+    setActive((i) => (i + dir + total) % total)
+  }
+
+  const openLightbox = (index) => setLightboxIndex(index)
+
+  const closeLightbox = useCallback(() => setLightboxIndex(null), [])
+
+  const navigateLightbox = useCallback((dir) => {
+    setLightboxIndex((i) => {
+      const next = (i + dir + total) % total
+      setActive(next)
+      return next
+    })
+  }, [total])
+
+  useEffect(() => {
+    if (reduced || lightboxIndex !== null) return
+    const timer = setInterval(() => setActive((i) => (i + 1) % total), 4000)
+    return () => clearInterval(timer)
+  }, [reduced, total, lightboxIndex])
+
+  return (
+    <div className="relative w-full">
+      <AnimatePresence>
+        {lightboxIndex !== null && (
+          <CineVerseLightbox
+            key="cineverse-lightbox"
+            index={lightboxIndex}
+            onClose={closeLightbox}
+            onNavigate={navigateLightbox}
+          />
+        )}
+      </AnimatePresence>
+
+      <div
+        className="pointer-events-none absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-rose-600/20 via-red-900/15 to-purple-600/15 opacity-80 blur-2xl sm:-inset-4 sm:rounded-[2.25rem]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute -inset-px rounded-[1.85rem] bg-gradient-to-r from-rose-500/20 via-transparent to-red-500/15 sm:rounded-[2.05rem]"
+        aria-hidden
+      />
+
+      <motion.article
+        initial={{ opacity: 0, y: 48 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={viewport}
+        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+        whileHover={reduced ? {} : { y: -6 }}
+        className="group relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-black/40 shadow-2xl shadow-rose-950/30 backdrop-blur-2xl sm:rounded-[2rem]"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 45%, rgba(127,29,29,0.08) 100%)",
+        }}
+      >
+        <div
+          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-rose-500/15 blur-[100px] transition-opacity duration-700 group-hover:opacity-100"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-red-600/10 blur-[90px] transition-opacity duration-700 group-hover:opacity-100"
+          aria-hidden
+        />
+
+        <div className="relative border-b border-white/10 bg-black/30">
+          <div className="relative aspect-[16/10] w-full overflow-hidden sm:aspect-[16/9] md:aspect-[21/9]">
+            <button
+              type="button"
+              onClick={() => openLightbox(active)}
+              aria-label={`Open ${CINEVERSE_SLIDES[active].label} in fullscreen`}
+              className="absolute inset-0 z-[1] cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-400/60"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.img
+                  key={active}
+                  src={CINEVERSE_SLIDES[active].src}
+                  alt={CINEVERSE_SLIDES[active].alt}
+                  initial={{ opacity: 0, scale: 1.03 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                  className="absolute inset-0 h-full w-full object-cover object-top transition duration-300 group-hover:brightness-110"
+                  draggable={false}
+                />
+              </AnimatePresence>
+            </button>
+
+            <div className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-black via-black/25 to-black/10" />
+            <div className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-br from-rose-500/0 to-red-600/0 opacity-0 transition duration-500 group-hover:from-rose-500/15 group-hover:to-red-600/10 group-hover:opacity-100" />
+
+            <span className="pointer-events-none absolute bottom-14 left-1/2 z-[3] -translate-x-1/2 rounded-full border border-white/10 bg-black/50 px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-zinc-400 backdrop-blur-md sm:bottom-16 sm:text-xs">
+              Tap to expand
+            </span>
+
+            <div className="absolute left-4 top-4 z-10 sm:left-6 sm:top-6">
+              <span className="relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-rose-400/40 bg-rose-500/20 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-rose-100 shadow-lg shadow-rose-500/25 backdrop-blur-md sm:text-sm">
+                <span className="absolute inset-0 animate-pulse rounded-full bg-rose-400/30 blur-md" aria-hidden />
+                <span className="relative flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-rose-300 shadow-[0_0_8px_rgba(251,113,133,0.9)]" />
+                  Streaming Platform
+                </span>
+              </span>
+            </div>
+
+            <span className="absolute right-4 top-4 z-10 rounded-full border border-white/10 bg-black/50 px-3 py-1 text-xs font-medium text-zinc-300 backdrop-blur-md sm:right-6 sm:top-6">
+              {CINEVERSE_SLIDES[active].label}
+            </span>
+
+            <span className="absolute bottom-4 right-4 z-10 rounded-full border border-white/10 bg-black/60 px-3 py-1.5 font-mono text-xs font-semibold tabular-nums text-white backdrop-blur-md sm:bottom-6 sm:right-6 sm:px-4 sm:text-sm">
+              {active + 1} / {total}
+            </span>
+
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                go(-1)
+              }}
+              aria-label="Previous screenshot"
+              className="absolute left-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/50 text-white backdrop-blur-md transition hover:border-rose-400/50 hover:bg-rose-500/20 sm:left-5 sm:h-11 sm:w-11"
+            >
+              <FaChevronLeft className="text-sm" />
+            </button>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                go(1)
+              }}
+              aria-label="Next screenshot"
+              className="absolute right-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/50 text-white backdrop-blur-md transition hover:border-rose-400/50 hover:bg-rose-500/20 sm:right-5 sm:h-11 sm:w-11"
+            >
+              <FaChevronRight className="text-sm" />
+            </button>
+
+            <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2 sm:bottom-6">
+              {CINEVERSE_SLIDES.map((slide, i) => (
+                <button
+                  key={slide.label}
+                  type="button"
+                  aria-label={`Show ${slide.label}`}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setActive(i)
+                  }}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    i === active
+                      ? "w-8 bg-rose-400 shadow-[0_0_12px_rgba(251,113,133,0.6)]"
+                      : "w-2 bg-white/30 hover:bg-white/50"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="relative grid gap-8 p-6 sm:p-8 md:grid-cols-5 md:gap-10 md:p-10 lg:p-12">
+          <div className="md:col-span-3">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-rose-400">
+              Movie Streaming Platform
+            </p>
+            <h3 className="font-display mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+              Cine<span className="animate-gradient-text bg-clip-text">Verse</span>
+            </h3>
+            <p className="max-w-2xl text-base leading-relaxed text-zinc-400 sm:text-lg">
+              A premium Netflix-inspired movie streaming platform built with React
+              and Firebase featuring movie discovery, watchlists, trailer integration,
+              authentication, and responsive design.
+            </p>
+
+            <div className="mt-6 flex flex-wrap gap-2 sm:mt-8">
+              {CINEVERSE_TECH.map((tech) => (
+                <motion.span
+                  key={tech}
+                  whileHover={reduced ? {} : { y: -2, scale: 1.02 }}
+                  className="rounded-full border border-white/10 bg-white/[0.06] px-3.5 py-1.5 text-xs font-medium text-zinc-300 backdrop-blur-md transition-colors duration-300 hover:border-rose-400/35 hover:text-white sm:px-4 sm:py-2 sm:text-sm"
+                >
+                  {tech}
+                </motion.span>
+              ))}
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-3 sm:mt-10">
+              <motion.a
+                href={CINEVERSE_GITHUB}
+                target="_blank"
+                rel="noreferrer"
+                whileHover={reduced ? {} : { scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="inline-flex items-center gap-2.5 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-black shadow-xl shadow-rose-500/20 transition hover:shadow-2xl hover:shadow-rose-500/30"
+              >
+                <FaGithub className="text-lg" />
+                GitHub Repository
+              </motion.a>
+              <motion.a
+                href={CINEVERSE_DEMO}
+                onClick={(e) => e.preventDefault()}
+                whileHover={reduced ? {} : { scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                aria-disabled="true"
+                title="Live demo coming soon"
+                className="inline-flex cursor-not-allowed items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.04] px-7 py-3.5 text-sm font-semibold text-zinc-400 backdrop-blur-md"
+              >
+                <FaExternalLinkAlt className="text-sm" />
+                Live Demo
+                <span className="text-xs font-normal text-zinc-500">(Soon)</span>
+              </motion.a>
+            </div>
+          </div>
+
+          <div className="md:col-span-2">
+            <div className="glass-panel h-full rounded-2xl p-5 sm:p-6">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
+                Project Highlights
+              </p>
+              <ul className="space-y-3 sm:space-y-4">
+                {CINEVERSE_HIGHLIGHTS.map((item, i) => (
+                  <motion.li
+                    key={item}
+                    initial={{ opacity: 0, x: 12 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={viewport}
+                    transition={{ duration: 0.4, delay: i * 0.08 }}
+                    whileHover={reduced ? {} : { x: 4 }}
+                    className="flex items-start gap-3 rounded-xl border border-white/5 bg-white/[0.03] px-4 py-3 transition duration-300 hover:border-rose-400/25 hover:bg-rose-500/5"
+                  >
+                    <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-rose-500/20 text-rose-300">
+                      <FaCheck className="text-[10px]" />
+                    </span>
+                    <span className="text-sm font-medium text-zinc-200 sm:text-base">
+                      {item}
+                    </span>
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </motion.article>
+    </div>
+  )
+}
+
 function FloatingBadge({ children, delay = 0 }) {
   const reduced = useReducedMotion()
   return (
@@ -990,67 +1379,32 @@ export default function App() {
 
             <div className="flex flex-col gap-8 md:gap-10">
               <SafeWatchShowcase reduced={reduced} />
+              <CineVerseShowcase reduced={reduced} />
 
-              <div className="grid gap-8 md:grid-cols-2 md:gap-10">
-                <motion.article
-                  initial={{ opacity: 0, y: 48 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={viewport}
-                  transition={{ duration: 0.6, delay: 0.08 }}
-                  whileHover={reduced ? {} : { y: -10 }}
-                  className="group glass-panel relative overflow-hidden rounded-[1.75rem] transition duration-500 hover:border-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/15 sm:rounded-[2rem]"
-                >
-                  <div className="relative overflow-hidden">
-                    <motion.img
-                      src={cineverseHome}
-                      alt="Cineverse"
-                      className="h-[240px] w-full object-cover sm:h-[280px] md:h-[320px]"
-                      whileHover={reduced ? {} : { scale: 1.06 }}
-                      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 transition duration-500 group-hover:opacity-90" />
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-br from-purple-500/0 to-blue-500/0 opacity-0 transition duration-500 group-hover:from-purple-500/15 group-hover:to-blue-500/10 group-hover:opacity-100"
-                      aria-hidden
-                    />
-                  </div>
-                  <div className="relative p-6 sm:p-8">
-                    <h3 className="font-display mb-3 text-2xl font-semibold text-white transition duration-300 group-hover:bg-gradient-to-r group-hover:from-white group-hover:via-purple-200 group-hover:to-sky-300 group-hover:bg-clip-text group-hover:text-transparent sm:text-3xl">
-                      CineVerse
-                    </h3>
-                    <p className="leading-relaxed text-zinc-400">
-                      A premium Netflix-inspired streaming platform built with
-                      React featuring modern UI, responsive design, and immersive
-                      movie browsing experience.
-                    </p>
-                  </div>
-                </motion.article>
-
-                <motion.article
-                  initial={{ opacity: 0, y: 48 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={viewport}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  aria-label="Ambular — coming soon"
-                  className="glass-panel relative flex min-h-[420px] flex-col overflow-hidden rounded-[1.75rem] border border-dashed border-white/15 sm:min-h-[480px] sm:rounded-[2rem]"
-                >
-                  <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-white/[0.03] via-transparent to-blue-500/5 px-6 py-16">
-                    <div
-                      className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(139,92,246,0.08),transparent_70%)]"
-                      aria-hidden
-                    />
-                    <p className="relative mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-zinc-500">
-                      Coming Soon
-                    </p>
-                    <h3 className="font-display relative text-2xl font-bold tracking-tight text-white/70 sm:text-3xl">
-                      Ambular
-                    </h3>
-                    <p className="relative mt-3 max-w-xs text-center text-sm text-zinc-500">
-                      Reserved for the next featured project
-                    </p>
-                  </div>
-                </motion.article>
-              </div>
+              <motion.article
+                initial={{ opacity: 0, y: 48 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={viewport}
+                transition={{ duration: 0.6, delay: 0.12 }}
+                aria-label="Ambular — coming soon"
+                className="glass-panel relative flex min-h-[280px] flex-col overflow-hidden rounded-[1.75rem] border border-dashed border-white/15 sm:min-h-[320px] sm:rounded-[2rem]"
+              >
+                <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-white/[0.03] via-transparent to-blue-500/5 px-6 py-14">
+                  <div
+                    className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(139,92,246,0.08),transparent_70%)]"
+                    aria-hidden
+                  />
+                  <p className="relative mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-zinc-500">
+                    Coming Soon
+                  </p>
+                  <h3 className="font-display relative text-2xl font-bold tracking-tight text-white/70 sm:text-3xl">
+                    Ambular
+                  </h3>
+                  <p className="relative mt-3 max-w-xs text-center text-sm text-zinc-500">
+                    Reserved for the next featured project
+                  </p>
+                </div>
+              </motion.article>
             </div>
           </div>
         </section>
