@@ -31,6 +31,8 @@ import safewatchAlerts from "./assets/safewatch/alerts-screen.jpeg"
 import safewatchCctv from "./assets/safewatch/cctv-screen.jpeg"
 import safewatchIpCamera from "./assets/safewatch/add-ip-camera-screen.jpeg"
 import safewatchProfile from "./assets/safewatch/profile-screen.jpeg"
+import safewatchLogin from "./assets/safewatch/login-screen.jpeg"
+import safewatchSignup from "./assets/safewatch/signup-screen.jpeg"
 import resume from "./assets/resume.pdf"
 import profile from "./assets/profile.png"
 
@@ -59,7 +61,115 @@ const SAFEWATCH_SLIDES = [
   { src: safewatchCctv, alt: "CCTV monitoring", label: "CCTV" },
   { src: safewatchIpCamera, alt: "IP camera setup", label: "IP Cameras" },
   { src: safewatchProfile, alt: "User profile", label: "Profile" },
+  { src: safewatchLogin, alt: "Login screen", label: "Login" },
+  { src: safewatchSignup, alt: "Sign up screen", label: "Sign Up" },
 ]
+
+function SafeWatchLightbox({ index, onClose, onNavigate }) {
+  const slide = SAFEWATCH_SLIDES[index]
+  const total = SAFEWATCH_SLIDES.length
+
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === "Escape") onClose()
+      if (e.key === "ArrowLeft") onNavigate(-1)
+      if (e.key === "ArrowRight") onNavigate(1)
+    }
+    document.body.style.overflow = "hidden"
+    window.addEventListener("keydown", handleKey)
+    return () => {
+      document.body.style.overflow = ""
+      window.removeEventListener("keydown", handleKey)
+    }
+  }, [onClose, onNavigate])
+
+  return (
+    <motion.div
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${slide.label} screenshot`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6"
+      onClick={onClose}
+    >
+      <motion.div
+        className="absolute inset-0 bg-black/85 backdrop-blur-xl"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        aria-hidden
+      />
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.88 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.92 }}
+        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        className="relative z-10 flex w-full max-w-6xl flex-col items-center"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close lightbox"
+          className="absolute -top-2 right-0 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/60 text-white backdrop-blur-md transition hover:border-purple-400/50 hover:bg-purple-500/25 sm:-top-3 sm:right-0 sm:h-11 sm:w-11"
+        >
+          <FaTimes className="text-lg" />
+        </button>
+
+        <p className="mb-3 text-center text-sm font-medium text-zinc-400 sm:mb-4">
+          {slide.label}{" "}
+          <span className="text-zinc-600">
+            {index + 1} / {total}
+          </span>
+        </p>
+
+        <div className="relative flex w-full items-center justify-center gap-2 sm:gap-4">
+          <button
+            type="button"
+            onClick={() => onNavigate(-1)}
+            aria-label="Previous screenshot"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 bg-black/60 text-white backdrop-blur-md transition hover:border-purple-400/50 hover:bg-purple-500/25 sm:h-12 sm:w-12"
+          >
+            <FaChevronLeft />
+          </button>
+
+          <div className="relative max-h-[75vh] min-h-0 flex-1 overflow-hidden rounded-xl border border-white/10 bg-black/40 shadow-2xl shadow-purple-950/50 sm:rounded-2xl sm:max-h-[82vh]">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.img
+                key={index}
+                src={slide.src}
+                alt={slide.alt}
+                initial={{ opacity: 0, scale: 0.94 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className="mx-auto max-h-[75vh] w-full object-contain sm:max-h-[82vh]"
+                draggable={false}
+              />
+            </AnimatePresence>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => onNavigate(1)}
+            aria-label="Next screenshot"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 bg-black/60 text-white backdrop-blur-md transition hover:border-purple-400/50 hover:bg-purple-500/25 sm:h-12 sm:w-12"
+          >
+            <FaChevronRight />
+          </button>
+        </div>
+
+        <p className="mt-4 hidden text-xs text-zinc-500 sm:block">
+          Click outside the image or press Esc to close
+        </p>
+      </motion.div>
+    </motion.div>
+  )
+}
 
 const viewport = { once: true, margin: "-60px 0px -60px 0px" }
 
@@ -236,20 +346,43 @@ function HighlightCard({ item, index, reduced }) {
 
 function SafeWatchShowcase({ reduced }) {
   const [active, setActive] = useState(0)
+  const [lightboxIndex, setLightboxIndex] = useState(null)
   const total = SAFEWATCH_SLIDES.length
 
   const go = (dir) => {
     setActive((i) => (i + dir + total) % total)
   }
 
+  const openLightbox = (index) => setLightboxIndex(index)
+
+  const closeLightbox = useCallback(() => setLightboxIndex(null), [])
+
+  const navigateLightbox = useCallback((dir) => {
+    setLightboxIndex((i) => {
+      const next = (i + dir + total) % total
+      setActive(next)
+      return next
+    })
+  }, [total])
+
   useEffect(() => {
-    if (reduced) return
+    if (reduced || lightboxIndex !== null) return
     const timer = setInterval(() => setActive((i) => (i + 1) % total), 5000)
     return () => clearInterval(timer)
-  }, [reduced, total])
+  }, [reduced, total, lightboxIndex])
 
   return (
     <div className="relative w-full">
+      <AnimatePresence>
+        {lightboxIndex !== null && (
+          <SafeWatchLightbox
+            key="safewatch-lightbox"
+            index={lightboxIndex}
+            onClose={closeLightbox}
+            onNavigate={navigateLightbox}
+          />
+        )}
+      </AnimatePresence>
       <div
         className="pointer-events-none absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-purple-600/25 via-violet-900/15 to-blue-600/20 opacity-80 blur-2xl sm:-inset-4 sm:rounded-[2.25rem]"
         aria-hidden
@@ -283,23 +416,35 @@ function SafeWatchShowcase({ reduced }) {
         {/* Carousel */}
         <div className="relative border-b border-white/10 bg-black/30">
           <div className="relative aspect-[16/10] w-full overflow-hidden sm:aspect-[16/9] md:aspect-[21/9]">
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.img
-                key={active}
-                src={SAFEWATCH_SLIDES[active].src}
-                alt={SAFEWATCH_SLIDES[active].alt}
-                initial={{ opacity: 0, scale: 1.03 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute inset-0 h-full w-full object-cover object-top"
-              />
-            </AnimatePresence>
+            <button
+              type="button"
+              onClick={() => openLightbox(active)}
+              aria-label={`Open ${SAFEWATCH_SLIDES[active].label} in fullscreen`}
+              className="absolute inset-0 z-[1] cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400/60"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.img
+                  key={active}
+                  src={SAFEWATCH_SLIDES[active].src}
+                  alt={SAFEWATCH_SLIDES[active].alt}
+                  initial={{ opacity: 0, scale: 1.03 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                  className="absolute inset-0 h-full w-full object-cover object-top transition duration-300 group-hover:brightness-110"
+                  draggable={false}
+                />
+              </AnimatePresence>
+            </button>
 
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/25 to-black/10" />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-purple-900/20 via-transparent to-blue-900/20 opacity-0 transition duration-500 group-hover:opacity-100" />
+            <div className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-black via-black/25 to-black/10" />
+            <div className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-r from-purple-900/20 via-transparent to-blue-900/20 opacity-0 transition duration-500 group-hover:opacity-100" />
 
-            <div className="absolute left-4 top-4 sm:left-6 sm:top-6">
+            <span className="pointer-events-none absolute bottom-14 left-1/2 z-[3] -translate-x-1/2 rounded-full border border-white/10 bg-black/50 px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-zinc-400 backdrop-blur-md sm:bottom-16 sm:text-xs">
+              Tap to expand
+            </span>
+
+            <div className="absolute left-4 top-4 z-10 sm:left-6 sm:top-6">
               <span className="relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-purple-400/40 bg-purple-500/20 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-purple-100 shadow-lg shadow-purple-500/25 backdrop-blur-md sm:text-sm">
                 <span className="absolute inset-0 animate-pulse rounded-full bg-purple-400/30 blur-md" aria-hidden />
                 <span className="relative flex items-center gap-2">
@@ -309,34 +454,43 @@ function SafeWatchShowcase({ reduced }) {
               </span>
             </div>
 
-            <span className="absolute right-4 top-4 rounded-full border border-white/10 bg-black/50 px-3 py-1 text-xs font-medium text-zinc-300 backdrop-blur-md sm:right-6 sm:top-6">
+            <span className="absolute right-4 top-4 z-10 rounded-full border border-white/10 bg-black/50 px-3 py-1 text-xs font-medium text-zinc-300 backdrop-blur-md sm:right-6 sm:top-6">
               {SAFEWATCH_SLIDES[active].label}
             </span>
 
             <button
               type="button"
-              onClick={() => go(-1)}
+              onClick={(e) => {
+                e.stopPropagation()
+                go(-1)
+              }}
               aria-label="Previous screenshot"
-              className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/50 text-white backdrop-blur-md transition hover:border-purple-400/50 hover:bg-purple-500/20 sm:left-5 sm:h-11 sm:w-11"
+              className="absolute left-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/50 text-white backdrop-blur-md transition hover:border-purple-400/50 hover:bg-purple-500/20 sm:left-5 sm:h-11 sm:w-11"
             >
               <FaChevronLeft className="text-sm" />
             </button>
             <button
               type="button"
-              onClick={() => go(1)}
+              onClick={(e) => {
+                e.stopPropagation()
+                go(1)
+              }}
               aria-label="Next screenshot"
-              className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/50 text-white backdrop-blur-md transition hover:border-purple-400/50 hover:bg-purple-500/20 sm:right-5 sm:h-11 sm:w-11"
+              className="absolute right-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/50 text-white backdrop-blur-md transition hover:border-purple-400/50 hover:bg-purple-500/20 sm:right-5 sm:h-11 sm:w-11"
             >
               <FaChevronRight className="text-sm" />
             </button>
 
-            <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2 sm:bottom-6">
+            <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2 sm:bottom-6">
               {SAFEWATCH_SLIDES.map((slide, i) => (
                 <button
                   key={slide.label}
                   type="button"
                   aria-label={`Show ${slide.label}`}
-                  onClick={() => setActive(i)}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setActive(i)
+                  }}
                   className={`h-2 rounded-full transition-all duration-300 ${
                     i === active
                       ? "w-8 bg-purple-400 shadow-[0_0_12px_rgba(192,132,252,0.6)]"
