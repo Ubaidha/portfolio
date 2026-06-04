@@ -21,8 +21,19 @@ import {
 
 import cineverseHome from "./assets/home-hero.png"
 import cineverseLogin from "./assets/login-page.png"
+import safewatchDashboard from "./assets/safewatch/dashboard-screen.jpeg"
 import resume from "./assets/resume.pdf"
 import profile from "./assets/profile.png"
+
+const SAFEWATCH_TECH = [
+  "Flutter",
+  "Python",
+  "Firebase",
+  "YOLOv8",
+  "OpenCV",
+  "CCTV",
+  "IP Webcam",
+]
 
 const viewport = { once: true, margin: "-60px 0px -60px 0px" }
 
@@ -609,54 +620,128 @@ export default function App() {
               </p>
             </motion.div>
 
-            <div className="grid gap-8 md:grid-cols-2 md:gap-10">
-              {[
-                {
-                  img: cineverseHome,
-                  alt: "Cineverse",
-                  title: "Cineverse",
-                  desc: "A premium Netflix-inspired streaming platform built with React featuring modern UI, responsive design, and immersive movie browsing experience.",
-                  accent: "group-hover:border-purple-500/50 group-hover:shadow-purple-500/15",
-                },
-                {
-                  img: cineverseLogin,
-                  alt: "Portfolio",
-                  title: "Portfolio Website",
-                  desc: "A modern full-stack developer portfolio showcasing projects, frontend expertise, animations, and premium user experience.",
-                  accent: "group-hover:border-blue-500/50 group-hover:shadow-blue-500/15",
-                },
-              ].map((project, pi) => (
-                <motion.article
-                  key={project.title}
-                  initial={{ opacity: 0, y: 48 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={viewport}
-                  transition={{ duration: 0.6, delay: pi * 0.12 }}
-                  whileHover={reduced ? {} : { y: -10 }}
-                  className={`group glass-panel relative overflow-hidden rounded-[1.75rem] transition duration-500 sm:rounded-[2rem] ${project.accent} hover:shadow-2xl`}
-                >
-                  <div className="relative overflow-hidden">
-                    <motion.img
-                      src={project.img}
-                      alt={project.alt}
-                      className="h-[240px] w-full object-cover sm:h-[280px] md:h-[320px]"
-                      whileHover={reduced ? {} : { scale: 1.06 }}
-                      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 transition duration-500 group-hover:opacity-90" />
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-br from-purple-500/0 to-blue-500/0 opacity-0 transition duration-500 group-hover:from-purple-500/15 group-hover:to-blue-500/10 group-hover:opacity-100"
-                      aria-hidden
-                    />
+            <div className="flex flex-col gap-8 md:gap-10">
+              {/* SafeWatch AI — featured */}
+              <motion.article
+                initial={{ opacity: 0, y: 48 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={viewport}
+                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={reduced ? {} : { y: -8 }}
+                className="group glass-panel relative overflow-hidden rounded-[1.75rem] transition duration-500 hover:border-purple-500/40 hover:shadow-2xl hover:shadow-purple-500/10 sm:rounded-[2rem]"
+              >
+                <div
+                  className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-purple-500/15 blur-[80px] transition-opacity duration-500 group-hover:opacity-100"
+                  aria-hidden
+                />
+                <div
+                  className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-blue-500/10 blur-[70px] transition-opacity duration-500 group-hover:opacity-100"
+                  aria-hidden
+                />
+
+                <div className="relative overflow-hidden border-b border-white/10">
+                  <motion.img
+                    src={safewatchDashboard}
+                    alt="SafeWatch AI dashboard"
+                    className="h-[260px] w-full object-cover object-top sm:h-[320px] md:h-[420px] lg:h-[460px]"
+                    whileHover={reduced ? {} : { scale: 1.04 }}
+                    transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-80 transition duration-500 group-hover:opacity-90" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-purple-500/0 to-blue-500/0 opacity-0 transition duration-500 group-hover:from-purple-500/20 group-hover:to-blue-500/10 group-hover:opacity-100" />
+                  <span className="absolute left-5 top-5 rounded-full border border-purple-400/30 bg-purple-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-purple-200 backdrop-blur-md sm:left-8 sm:top-8">
+                    Featured
+                  </span>
+                </div>
+
+                <div className="relative p-6 sm:p-8 md:p-10">
+                  <h3 className="font-display mb-3 text-2xl font-semibold text-white transition duration-300 group-hover:bg-gradient-to-r group-hover:from-white group-hover:via-purple-200 group-hover:to-sky-300 group-hover:bg-clip-text group-hover:text-transparent sm:text-3xl md:text-4xl">
+                    SafeWatch AI
+                  </h3>
+                  <p className="max-w-4xl text-base leading-relaxed text-zinc-400 sm:text-lg">
+                    AI-powered intelligent CCTV surveillance platform built using
+                    Flutter, Python, Firebase, YOLO, and IP Webcam integration.
+                    Features include real-time CCTV monitoring, weapon detection,
+                    automated alerts, image capture, and cloud-based surveillance
+                    management.
+                  </p>
+
+                  <div className="mt-6 flex flex-wrap gap-2 sm:mt-8 sm:gap-2.5">
+                    {SAFEWATCH_TECH.map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs font-medium text-zinc-300 backdrop-blur-md transition duration-300 group-hover:border-purple-400/25 group-hover:text-white sm:px-4 sm:py-2 sm:text-sm"
+                      >
+                        {tech}
+                      </span>
+                    ))}
                   </div>
-                  <div className="relative p-6 sm:p-8">
-                    <h3 className="font-display mb-3 text-2xl font-semibold text-white transition duration-300 group-hover:bg-gradient-to-r group-hover:from-white group-hover:via-purple-200 group-hover:to-sky-300 group-hover:bg-clip-text group-hover:text-transparent sm:text-3xl">
-                      {project.title}
-                    </h3>
-                    <p className="leading-relaxed text-zinc-400">{project.desc}</p>
-                  </div>
-                </motion.article>
-              ))}
+
+                  <motion.a
+                    href="https://github.com/Ubaidha/SafeWatch-AI"
+                    target="_blank"
+                    rel="noreferrer"
+                    whileHover={reduced ? {} : { scale: 1.03, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="mt-8 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] px-6 py-3 text-sm font-semibold text-white backdrop-blur-md transition duration-300 hover:border-purple-400/40 hover:bg-purple-500/15 hover:shadow-lg hover:shadow-purple-500/15 sm:mt-10"
+                  >
+                    <FaGithub className="text-lg" />
+                    View on GitHub
+                  </motion.a>
+                </div>
+              </motion.article>
+
+              <div className="grid gap-8 md:grid-cols-2 md:gap-10">
+                {[
+                  {
+                    img: cineverseHome,
+                    alt: "Cineverse",
+                    title: "Cineverse",
+                    desc: "A premium Netflix-inspired streaming platform built with React featuring modern UI, responsive design, and immersive movie browsing experience.",
+                    accent:
+                      "group-hover:border-purple-500/50 group-hover:shadow-purple-500/15",
+                  },
+                  {
+                    img: cineverseLogin,
+                    alt: "Portfolio",
+                    title: "Portfolio Website",
+                    desc: "A modern full-stack developer portfolio showcasing projects, frontend expertise, animations, and premium user experience.",
+                    accent:
+                      "group-hover:border-blue-500/50 group-hover:shadow-blue-500/15",
+                  },
+                ].map((project, pi) => (
+                  <motion.article
+                    key={project.title}
+                    initial={{ opacity: 0, y: 48 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={viewport}
+                    transition={{ duration: 0.6, delay: 0.08 + pi * 0.12 }}
+                    whileHover={reduced ? {} : { y: -10 }}
+                    className={`group glass-panel relative overflow-hidden rounded-[1.75rem] transition duration-500 sm:rounded-[2rem] ${project.accent} hover:shadow-2xl`}
+                  >
+                    <div className="relative overflow-hidden">
+                      <motion.img
+                        src={project.img}
+                        alt={project.alt}
+                        className="h-[240px] w-full object-cover sm:h-[280px] md:h-[320px]"
+                        whileHover={reduced ? {} : { scale: 1.06 }}
+                        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                      />
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 transition duration-500 group-hover:opacity-90" />
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-br from-purple-500/0 to-blue-500/0 opacity-0 transition duration-500 group-hover:from-purple-500/15 group-hover:to-blue-500/10 group-hover:opacity-100"
+                        aria-hidden
+                      />
+                    </div>
+                    <div className="relative p-6 sm:p-8">
+                      <h3 className="font-display mb-3 text-2xl font-semibold text-white transition duration-300 group-hover:bg-gradient-to-r group-hover:from-white group-hover:via-purple-200 group-hover:to-sky-300 group-hover:bg-clip-text group-hover:text-transparent sm:text-3xl">
+                        {project.title}
+                      </h3>
+                      <p className="leading-relaxed text-zinc-400">{project.desc}</p>
+                    </div>
+                  </motion.article>
+                ))}
+              </div>
             </div>
           </div>
         </section>
