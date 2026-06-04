@@ -17,11 +17,20 @@ import {
   FaFolderOpen,
   FaReact,
   FaLayerGroup,
+  FaChevronLeft,
+  FaChevronRight,
+  FaCheck,
 } from "react-icons/fa"
 
 import cineverseHome from "./assets/home-hero.png"
 import cineverseLogin from "./assets/login-page.png"
 import safewatchDashboard from "./assets/safewatch/dashboard-screen.jpeg"
+import safewatchLiveFeed from "./assets/safewatch/live-feed-screen.jpeg"
+import safewatchWeapon from "./assets/safewatch/weapon-detection-screen.jpeg"
+import safewatchAlerts from "./assets/safewatch/alerts-screen.jpeg"
+import safewatchCctv from "./assets/safewatch/cctv-screen.jpeg"
+import safewatchIpCamera from "./assets/safewatch/add-ip-camera-screen.jpeg"
+import safewatchProfile from "./assets/safewatch/profile-screen.jpeg"
 import resume from "./assets/resume.pdf"
 import profile from "./assets/profile.png"
 
@@ -32,7 +41,24 @@ const SAFEWATCH_TECH = [
   "YOLOv8",
   "OpenCV",
   "CCTV",
-  "IP Webcam",
+  "AI Detection",
+]
+
+const SAFEWATCH_METRICS = [
+  "Real-time CCTV Monitoring",
+  "Weapon Detection",
+  "Instant Alerts",
+  "Cloud Synchronization",
+]
+
+const SAFEWATCH_SLIDES = [
+  { src: safewatchDashboard, alt: "SafeWatch AI dashboard", label: "Dashboard" },
+  { src: safewatchLiveFeed, alt: "Live CCTV feed", label: "Live Feed" },
+  { src: safewatchWeapon, alt: "Weapon detection", label: "AI Detection" },
+  { src: safewatchAlerts, alt: "Alert notifications", label: "Alerts" },
+  { src: safewatchCctv, alt: "CCTV monitoring", label: "CCTV" },
+  { src: safewatchIpCamera, alt: "IP camera setup", label: "IP Cameras" },
+  { src: safewatchProfile, alt: "User profile", label: "Profile" },
 ]
 
 const viewport = { once: true, margin: "-60px 0px -60px 0px" }
@@ -205,6 +231,195 @@ function HighlightCard({ item, index, reduced }) {
         </p>
       </div>
     </motion.div>
+  )
+}
+
+function SafeWatchShowcase({ reduced }) {
+  const [active, setActive] = useState(0)
+  const total = SAFEWATCH_SLIDES.length
+
+  const go = (dir) => {
+    setActive((i) => (i + dir + total) % total)
+  }
+
+  useEffect(() => {
+    if (reduced) return
+    const timer = setInterval(() => setActive((i) => (i + 1) % total), 5000)
+    return () => clearInterval(timer)
+  }, [reduced, total])
+
+  return (
+    <div className="relative w-full">
+      <div
+        className="pointer-events-none absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-purple-600/25 via-violet-900/15 to-blue-600/20 opacity-80 blur-2xl sm:-inset-4 sm:rounded-[2.25rem]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute -inset-px rounded-[1.85rem] bg-gradient-to-r from-purple-500/20 via-transparent to-blue-500/20 sm:rounded-[2.05rem]"
+        aria-hidden
+      />
+
+      <motion.article
+        initial={{ opacity: 0, y: 48 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={viewport}
+        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+        whileHover={reduced ? {} : { y: -6 }}
+        className="group relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-black/40 shadow-2xl shadow-purple-950/40 backdrop-blur-2xl sm:rounded-[2rem]"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 45%, rgba(88,28,135,0.08) 100%)",
+        }}
+      >
+        <div
+          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-purple-500/20 blur-[100px] transition-opacity duration-700 group-hover:opacity-100"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-blue-500/15 blur-[90px] transition-opacity duration-700 group-hover:opacity-100"
+          aria-hidden
+        />
+
+        {/* Carousel */}
+        <div className="relative border-b border-white/10 bg-black/30">
+          <div className="relative aspect-[16/10] w-full overflow-hidden sm:aspect-[16/9] md:aspect-[21/9]">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.img
+                key={active}
+                src={SAFEWATCH_SLIDES[active].src}
+                alt={SAFEWATCH_SLIDES[active].alt}
+                initial={{ opacity: 0, scale: 1.03 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute inset-0 h-full w-full object-cover object-top"
+              />
+            </AnimatePresence>
+
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/25 to-black/10" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-purple-900/20 via-transparent to-blue-900/20 opacity-0 transition duration-500 group-hover:opacity-100" />
+
+            <div className="absolute left-4 top-4 sm:left-6 sm:top-6">
+              <span className="relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-purple-400/40 bg-purple-500/20 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-purple-100 shadow-lg shadow-purple-500/25 backdrop-blur-md sm:text-sm">
+                <span className="absolute inset-0 animate-pulse rounded-full bg-purple-400/30 blur-md" aria-hidden />
+                <span className="relative flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-purple-300 shadow-[0_0_8px_rgba(192,132,252,0.9)]" />
+                  Featured Project
+                </span>
+              </span>
+            </div>
+
+            <span className="absolute right-4 top-4 rounded-full border border-white/10 bg-black/50 px-3 py-1 text-xs font-medium text-zinc-300 backdrop-blur-md sm:right-6 sm:top-6">
+              {SAFEWATCH_SLIDES[active].label}
+            </span>
+
+            <button
+              type="button"
+              onClick={() => go(-1)}
+              aria-label="Previous screenshot"
+              className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/50 text-white backdrop-blur-md transition hover:border-purple-400/50 hover:bg-purple-500/20 sm:left-5 sm:h-11 sm:w-11"
+            >
+              <FaChevronLeft className="text-sm" />
+            </button>
+            <button
+              type="button"
+              onClick={() => go(1)}
+              aria-label="Next screenshot"
+              className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/50 text-white backdrop-blur-md transition hover:border-purple-400/50 hover:bg-purple-500/20 sm:right-5 sm:h-11 sm:w-11"
+            >
+              <FaChevronRight className="text-sm" />
+            </button>
+
+            <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2 sm:bottom-6">
+              {SAFEWATCH_SLIDES.map((slide, i) => (
+                <button
+                  key={slide.label}
+                  type="button"
+                  aria-label={`Show ${slide.label}`}
+                  onClick={() => setActive(i)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    i === active
+                      ? "w-8 bg-purple-400 shadow-[0_0_12px_rgba(192,132,252,0.6)]"
+                      : "w-2 bg-white/30 hover:bg-white/50"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="relative grid gap-8 p-6 sm:p-8 md:grid-cols-5 md:gap-10 md:p-10 lg:p-12">
+          <div className="md:col-span-3">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-purple-400">
+              AI Surveillance Platform
+            </p>
+            <h3 className="font-display mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+              SafeWatch{" "}
+              <span className="animate-gradient-text bg-clip-text">AI</span>
+            </h3>
+            <p className="max-w-2xl text-base leading-relaxed text-zinc-400 sm:text-lg">
+              AI-powered intelligent CCTV surveillance platform built using
+              Flutter, Python, Firebase, YOLO, and IP Webcam integration. Features
+              include real-time CCTV monitoring, weapon detection, automated
+              alerts, image capture, and cloud-based surveillance management.
+            </p>
+
+            <div className="mt-6 flex flex-wrap gap-2 sm:mt-8">
+              {SAFEWATCH_TECH.map((tech) => (
+                <motion.span
+                  key={tech}
+                  whileHover={reduced ? {} : { y: -2, scale: 1.02 }}
+                  className="rounded-full border border-white/10 bg-white/[0.06] px-3.5 py-1.5 text-xs font-medium text-zinc-300 backdrop-blur-md transition-colors duration-300 hover:border-purple-400/35 hover:text-white sm:px-4 sm:py-2 sm:text-sm"
+                >
+                  {tech}
+                </motion.span>
+              ))}
+            </div>
+
+            <motion.a
+              href="https://github.com/Ubaidha/SafeWatch-AI"
+              target="_blank"
+              rel="noreferrer"
+              whileHover={reduced ? {} : { scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              className="mt-8 inline-flex items-center gap-2.5 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-black shadow-xl shadow-purple-500/20 transition hover:shadow-2xl hover:shadow-purple-500/30 sm:mt-10"
+            >
+              <FaGithub className="text-lg" />
+              View on GitHub
+            </motion.a>
+          </div>
+
+          <div className="md:col-span-2">
+            <div className="glass-panel h-full rounded-2xl p-5 sm:p-6">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
+                Core Capabilities
+              </p>
+              <ul className="space-y-3 sm:space-y-4">
+                {SAFEWATCH_METRICS.map((metric, i) => (
+                  <motion.li
+                    key={metric}
+                    initial={{ opacity: 0, x: 12 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={viewport}
+                    transition={{ duration: 0.4, delay: i * 0.08 }}
+                    whileHover={reduced ? {} : { x: 4 }}
+                    className="flex items-start gap-3 rounded-xl border border-white/5 bg-white/[0.03] px-4 py-3 transition duration-300 hover:border-purple-400/25 hover:bg-purple-500/5"
+                  >
+                    <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-purple-500/20 text-purple-300">
+                      <FaCheck className="text-[10px]" />
+                    </span>
+                    <span className="text-sm font-medium text-zinc-200 sm:text-base">
+                      {metric}
+                    </span>
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </motion.article>
+    </div>
   )
 }
 
@@ -621,75 +836,7 @@ export default function App() {
             </motion.div>
 
             <div className="flex flex-col gap-8 md:gap-10">
-              {/* SafeWatch AI — featured */}
-              <motion.article
-                initial={{ opacity: 0, y: 48 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={viewport}
-                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={reduced ? {} : { y: -8 }}
-                className="group glass-panel relative overflow-hidden rounded-[1.75rem] transition duration-500 hover:border-purple-500/40 hover:shadow-2xl hover:shadow-purple-500/10 sm:rounded-[2rem]"
-              >
-                <div
-                  className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-purple-500/15 blur-[80px] transition-opacity duration-500 group-hover:opacity-100"
-                  aria-hidden
-                />
-                <div
-                  className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-blue-500/10 blur-[70px] transition-opacity duration-500 group-hover:opacity-100"
-                  aria-hidden
-                />
-
-                <div className="relative overflow-hidden border-b border-white/10">
-                  <motion.img
-                    src={safewatchDashboard}
-                    alt="SafeWatch AI dashboard"
-                    className="h-[260px] w-full object-cover object-top sm:h-[320px] md:h-[420px] lg:h-[460px]"
-                    whileHover={reduced ? {} : { scale: 1.04 }}
-                    transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                  />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-80 transition duration-500 group-hover:opacity-90" />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-purple-500/0 to-blue-500/0 opacity-0 transition duration-500 group-hover:from-purple-500/20 group-hover:to-blue-500/10 group-hover:opacity-100" />
-                  <span className="absolute left-5 top-5 rounded-full border border-purple-400/30 bg-purple-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-purple-200 backdrop-blur-md sm:left-8 sm:top-8">
-                    Featured
-                  </span>
-                </div>
-
-                <div className="relative p-6 sm:p-8 md:p-10">
-                  <h3 className="font-display mb-3 text-2xl font-semibold text-white transition duration-300 group-hover:bg-gradient-to-r group-hover:from-white group-hover:via-purple-200 group-hover:to-sky-300 group-hover:bg-clip-text group-hover:text-transparent sm:text-3xl md:text-4xl">
-                    SafeWatch AI
-                  </h3>
-                  <p className="max-w-4xl text-base leading-relaxed text-zinc-400 sm:text-lg">
-                    AI-powered intelligent CCTV surveillance platform built using
-                    Flutter, Python, Firebase, YOLO, and IP Webcam integration.
-                    Features include real-time CCTV monitoring, weapon detection,
-                    automated alerts, image capture, and cloud-based surveillance
-                    management.
-                  </p>
-
-                  <div className="mt-6 flex flex-wrap gap-2 sm:mt-8 sm:gap-2.5">
-                    {SAFEWATCH_TECH.map((tech) => (
-                      <span
-                        key={tech}
-                        className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs font-medium text-zinc-300 backdrop-blur-md transition duration-300 group-hover:border-purple-400/25 group-hover:text-white sm:px-4 sm:py-2 sm:text-sm"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <motion.a
-                    href="https://github.com/Ubaidha/SafeWatch-AI"
-                    target="_blank"
-                    rel="noreferrer"
-                    whileHover={reduced ? {} : { scale: 1.03, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="mt-8 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] px-6 py-3 text-sm font-semibold text-white backdrop-blur-md transition duration-300 hover:border-purple-400/40 hover:bg-purple-500/15 hover:shadow-lg hover:shadow-purple-500/15 sm:mt-10"
-                  >
-                    <FaGithub className="text-lg" />
-                    View on GitHub
-                  </motion.a>
-                </div>
-              </motion.article>
+              <SafeWatchShowcase reduced={reduced} />
 
               <div className="grid gap-8 md:grid-cols-2 md:gap-10">
                 {[
