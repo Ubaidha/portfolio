@@ -20,11 +20,9 @@ import {
   FaChevronLeft,
   FaChevronRight,
   FaCheck,
-  FaExternalLinkAlt,
 } from "react-icons/fa"
 
 import cineverseHome from "./assets/home-hero.png"
-import cineverseLogin from "./assets/login-page.png"
 import safewatchDashboard from "./assets/safewatch/dashboard-screen.jpeg"
 import safewatchLiveFeed from "./assets/safewatch/live-feed-screen.jpeg"
 import safewatchWeapon from "./assets/safewatch/weapon-detection-screen.jpeg"
@@ -53,24 +51,6 @@ const SAFEWATCH_METRICS = [
   "Instant Alerts",
   "Cloud Synchronization",
 ]
-
-const PORTFOLIO_TECH = [
-  "React",
-  "Tailwind CSS",
-  "Framer Motion",
-  "GitHub",
-  "Vercel",
-]
-
-const PORTFOLIO_METRICS = [
-  "Live Deployment",
-  "Responsive Design",
-  "Modern UI",
-  "Animated Experience",
-]
-
-const PORTFOLIO_GITHUB = "https://github.com/Ubaidha/portfolio"
-const PORTFOLIO_LIVE = "https://ubaidha-portfolio.vercel.app"
 
 const SAFEWATCH_SLIDES = [
   { src: safewatchDashboard, alt: "SafeWatch AI dashboard", label: "Dashboard" },
@@ -360,136 +340,6 @@ function HighlightCard({ item, index, reduced }) {
         </p>
       </div>
     </motion.div>
-  )
-}
-
-function PersonalPortfolioShowcase({ reduced }) {
-  return (
-    <div className="relative h-full w-full">
-      <div
-        className="pointer-events-none absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-blue-600/20 via-violet-900/10 to-purple-600/15 opacity-80 blur-2xl sm:-inset-4 sm:rounded-[2.25rem]"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute -inset-px rounded-[1.85rem] bg-gradient-to-r from-blue-500/15 via-transparent to-purple-500/15 sm:rounded-[2.05rem]"
-        aria-hidden
-      />
-
-      <motion.article
-        initial={{ opacity: 0, y: 48 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={viewport}
-        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-        whileHover={reduced ? {} : { y: -6 }}
-        className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-white/10 bg-black/40 shadow-2xl shadow-blue-950/30 backdrop-blur-2xl sm:rounded-[2rem]"
-        style={{
-          background:
-            "linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 45%, rgba(30,58,138,0.08) 100%)",
-        }}
-      >
-        <div
-          className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-blue-500/15 blur-[90px] transition-opacity duration-700 group-hover:opacity-100"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-purple-500/10 blur-[80px] transition-opacity duration-700 group-hover:opacity-100"
-          aria-hidden
-        />
-
-        <div className="relative overflow-hidden border-b border-white/10 bg-black/30">
-          <motion.img
-            src={cineverseLogin}
-            alt="Personal Developer Portfolio preview"
-            className="h-[220px] w-full object-cover object-top sm:h-[260px] md:h-[280px]"
-            whileHover={reduced ? {} : { scale: 1.04 }}
-            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-          />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-80" />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-500/0 to-purple-500/0 opacity-0 transition duration-500 group-hover:from-blue-500/15 group-hover:to-purple-500/10 group-hover:opacity-100" />
-          <span className="absolute left-4 top-4 rounded-full border border-blue-400/30 bg-blue-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-blue-200 backdrop-blur-md sm:left-5 sm:top-5">
-            Web Portfolio
-          </span>
-        </div>
-
-        <div className="relative flex flex-1 flex-col gap-6 p-6 sm:p-7">
-          <div>
-            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-blue-400">
-              Frontend Showcase
-            </p>
-            <h3 className="font-display mb-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">
-              Personal{" "}
-              <span className="animate-gradient-text bg-clip-text">Developer</span>{" "}
-              Portfolio
-            </h3>
-            <p className="text-sm leading-relaxed text-zinc-400 sm:text-base">
-              Modern developer portfolio built with React, Tailwind CSS, Framer
-              Motion, GitHub, and Vercel. Designed to showcase projects, skills,
-              and professional experience.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap gap-2">
-            {PORTFOLIO_TECH.map((tech) => (
-              <motion.span
-                key={tech}
-                whileHover={reduced ? {} : { y: -2, scale: 1.02 }}
-                className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs font-medium text-zinc-300 backdrop-blur-md transition-colors duration-300 hover:border-blue-400/35 hover:text-white"
-              >
-                {tech}
-              </motion.span>
-            ))}
-          </div>
-
-          <div className="glass-panel rounded-2xl p-4 sm:p-5">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
-              Highlights
-            </p>
-            <ul className="grid gap-2 sm:grid-cols-2">
-              {PORTFOLIO_METRICS.map((metric, i) => (
-                <motion.li
-                  key={metric}
-                  initial={{ opacity: 0, x: 8 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={viewport}
-                  transition={{ duration: 0.35, delay: i * 0.06 }}
-                  className="flex items-center gap-2.5 rounded-lg border border-white/5 bg-white/[0.03] px-3 py-2.5 text-xs font-medium text-zinc-200 sm:text-sm"
-                >
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-500/20 text-blue-300">
-                    <FaCheck className="text-[9px]" />
-                  </span>
-                  {metric}
-                </motion.li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="mt-auto flex flex-wrap gap-3">
-            <motion.a
-              href={PORTFOLIO_GITHUB}
-              target="_blank"
-              rel="noreferrer"
-              whileHover={reduced ? {} : { scale: 1.03, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-md transition hover:border-blue-400/40 hover:bg-blue-500/15"
-            >
-              <FaGithub />
-              GitHub
-            </motion.a>
-            <motion.a
-              href={PORTFOLIO_LIVE}
-              target="_blank"
-              rel="noreferrer"
-              whileHover={reduced ? {} : { scale: 1.03, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black shadow-lg shadow-blue-500/15 transition hover:shadow-xl hover:shadow-blue-500/25"
-            >
-              <FaExternalLinkAlt className="text-sm" />
-              Live Website
-            </motion.a>
-          </div>
-        </div>
-      </motion.article>
-    </div>
   )
 }
 
@@ -1166,7 +1016,7 @@ export default function App() {
                   </div>
                   <div className="relative p-6 sm:p-8">
                     <h3 className="font-display mb-3 text-2xl font-semibold text-white transition duration-300 group-hover:bg-gradient-to-r group-hover:from-white group-hover:via-purple-200 group-hover:to-sky-300 group-hover:bg-clip-text group-hover:text-transparent sm:text-3xl">
-                      Cineverse
+                      CineVerse
                     </h3>
                     <p className="leading-relaxed text-zinc-400">
                       A premium Netflix-inspired streaming platform built with
@@ -1176,7 +1026,30 @@ export default function App() {
                   </div>
                 </motion.article>
 
-                <PersonalPortfolioShowcase reduced={reduced} />
+                <motion.article
+                  initial={{ opacity: 0, y: 48 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={viewport}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  aria-label="Ambular — coming soon"
+                  className="glass-panel relative flex min-h-[420px] flex-col overflow-hidden rounded-[1.75rem] border border-dashed border-white/15 sm:min-h-[480px] sm:rounded-[2rem]"
+                >
+                  <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-white/[0.03] via-transparent to-blue-500/5 px-6 py-16">
+                    <div
+                      className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(139,92,246,0.08),transparent_70%)]"
+                      aria-hidden
+                    />
+                    <p className="relative mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-zinc-500">
+                      Coming Soon
+                    </p>
+                    <h3 className="font-display relative text-2xl font-bold tracking-tight text-white/70 sm:text-3xl">
+                      Ambular
+                    </h3>
+                    <p className="relative mt-3 max-w-xs text-center text-sm text-zinc-500">
+                      Reserved for the next featured project
+                    </p>
+                  </div>
+                </motion.article>
               </div>
             </div>
           </div>
