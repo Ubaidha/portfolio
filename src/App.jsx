@@ -20,7 +20,9 @@ import {
   FaChevronLeft,
   FaChevronRight,
   FaCheck,
-  FaExternalLinkAlt,
+  FaMapMarkerAlt,
+  FaEnvelope,
+  FaPhoneAlt,
 } from "react-icons/fa"
 
 import cineverseHome from "./assets/cineverse/home-hero.png"
@@ -38,7 +40,6 @@ import safewatchIpCamera from "./assets/safewatch/add-ip-camera-screen.jpeg"
 import safewatchProfile from "./assets/safewatch/profile-screen.jpeg"
 import safewatchLogin from "./assets/safewatch/login-screen.jpeg"
 import safewatchSignup from "./assets/safewatch/signup-screen.jpeg"
-import resume from "./assets/resume.pdf"
 import profile from "./assets/profile.png"
 
 const SAFEWATCH_TECH = [
@@ -87,7 +88,6 @@ const CINEVERSE_HIGHLIGHTS = [
 ]
 
 const CINEVERSE_GITHUB = "https://github.com/Ubaidha/CineVerse"
-const CINEVERSE_DEMO = "#"
 
 const CINEVERSE_SLIDES = [
   { src: cineverseHome, alt: "CineVerse home hero", label: "Home" },
@@ -916,19 +916,6 @@ function CineVerseShowcase({ reduced }) {
                 <FaGithub className="text-lg" />
                 GitHub Repository
               </motion.a>
-              <motion.a
-                href={CINEVERSE_DEMO}
-                onClick={(e) => e.preventDefault()}
-                whileHover={reduced ? {} : { scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                aria-disabled="true"
-                title="Live demo coming soon"
-                className="inline-flex cursor-not-allowed items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.04] px-7 py-3.5 text-sm font-semibold text-zinc-400 backdrop-blur-md"
-              >
-                <FaExternalLinkAlt className="text-sm" />
-                Live Demo
-                <span className="text-xs font-normal text-zinc-500">(Soon)</span>
-              </motion.a>
             </div>
           </div>
 
@@ -1034,8 +1021,8 @@ export default function App() {
               Contact
             </a>
             <a
-              href={resume}
-              download
+              href="/resume.pdf"
+              download="Ubaidha-Resume.pdf"
               className="group flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black shadow-lg shadow-purple-500/10 transition duration-300 hover:scale-[1.03] hover:shadow-xl hover:shadow-purple-500/20"
             >
               <FaDownload className="transition group-hover:-translate-y-0.5" />
@@ -1079,8 +1066,8 @@ export default function App() {
                   </a>
                 ))}
                 <a
-                  href={resume}
-                  download
+                  href="/resume.pdf"
+                  download="Ubaidha-Resume.pdf"
                   onClick={closeMenu}
                   className="mt-2 flex items-center justify-center gap-2 rounded-full bg-white py-3 text-sm font-semibold text-black"
                 >
@@ -1100,10 +1087,22 @@ export default function App() {
                 initial={{ opacity: 0, y: 24 }}
                 animate={loaded ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                className="mb-5 text-xs font-semibold uppercase tracking-[0.35em] text-purple-400 sm:text-sm sm:tracking-[0.4em]"
+                className="mb-4 text-xs font-semibold uppercase tracking-[0.35em] text-purple-400 sm:text-sm sm:tracking-[0.4em]"
               >
                 Aspiring Software Developer
               </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={loaded ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.55, delay: 0.05 }}
+                className="mb-6 inline-flex max-w-full items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3.5 py-1.5 text-xs font-medium text-zinc-300 backdrop-blur-md sm:mb-7 sm:px-4 sm:py-2 sm:text-sm"
+              >
+                <span aria-hidden className="text-sm sm:text-base">
+                  📍
+                </span>
+                <span>Currently based in Abu Dhabi, UAE</span>
+              </motion.div>
 
               <motion.h1
                 initial={{ opacity: 0, y: 40 }}
@@ -1151,8 +1150,8 @@ export default function App() {
                   Contact Me
                 </motion.a>
                 <motion.a
-                  href={resume}
-                  download
+                  href="/resume.pdf"
+                  download="Ubaidha-Resume.pdf"
                   whileHover={{ scale: 1.03, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   className="flex items-center gap-2 rounded-full border border-purple-500/35 bg-purple-500/5 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition duration-300 hover:border-purple-400/50 hover:bg-purple-500/15 sm:px-8 sm:py-4"
@@ -1429,14 +1428,61 @@ export default function App() {
               <span className="animate-gradient-text bg-clip-text">Amazing</span> Together
             </h2>
             <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-zinc-400 sm:mt-8 sm:text-lg">
-              I’m always interested in exciting projects, collaborations, and
-              opportunities in frontend and full-stack development.
+              Currently based in Abu Dhabi, UAE, and open to entry-level
+              opportunities in software development, IT, and administration.
             </p>
-            <div className="mt-10 space-y-3 text-base text-zinc-300 sm:mt-12 sm:text-lg">
-              <p>📧 ubaidhaummer@gmail.com</p>
-              <p>📱 +91 8921988197</p>
-              <p>🔗 linkedin.com/in/ubaidha-ummer</p>
-              <p>💻 github.com/Ubaidha</p>
+            <div className="mx-auto mt-10 flex max-w-lg flex-col gap-3 text-left sm:mt-12">
+              <a
+                href="mailto:ubaidhaummer@gmail.com"
+                className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-sm text-zinc-300 backdrop-blur-md transition duration-300 hover:border-purple-400/35 hover:bg-white/[0.07] hover:text-white sm:text-base"
+              >
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] text-purple-300 transition group-hover:border-purple-400/30">
+                  <FaEnvelope className="text-sm" />
+                </span>
+                ubaidhaummer@gmail.com
+              </a>
+              <a
+                href="tel:+971502031516"
+                className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-sm text-zinc-300 backdrop-blur-md transition duration-300 hover:border-purple-400/35 hover:bg-white/[0.07] hover:text-white sm:text-base"
+              >
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] text-purple-300 transition group-hover:border-purple-400/30">
+                  <FaPhoneAlt className="text-sm" />
+                </span>
+                +971 50 203 1516
+              </a>
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Abu+Dhabi%2C+United+Arab+Emirates"
+                target="_blank"
+                rel="noreferrer"
+                className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-sm text-zinc-300 backdrop-blur-md transition duration-300 hover:border-purple-400/35 hover:bg-white/[0.07] hover:text-white sm:text-base"
+              >
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] text-purple-300 transition group-hover:border-purple-400/30">
+                  <FaMapMarkerAlt className="text-sm" />
+                </span>
+                Abu Dhabi, United Arab Emirates
+              </a>
+              <a
+                href="https://linkedin.com/in/ubaidha-ummer"
+                target="_blank"
+                rel="noreferrer"
+                className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-sm text-zinc-300 backdrop-blur-md transition duration-300 hover:border-purple-400/35 hover:bg-white/[0.07] hover:text-white sm:text-base"
+              >
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] text-purple-300 transition group-hover:border-purple-400/30">
+                  <FaLinkedin className="text-sm" />
+                </span>
+                linkedin.com/in/ubaidha-ummer
+              </a>
+              <a
+                href="https://github.com/Ubaidha"
+                target="_blank"
+                rel="noreferrer"
+                className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-sm text-zinc-300 backdrop-blur-md transition duration-300 hover:border-purple-400/35 hover:bg-white/[0.07] hover:text-white sm:text-base"
+              >
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] text-purple-300 transition group-hover:border-purple-400/30">
+                  <FaGithub className="text-sm" />
+                </span>
+                github.com/Ubaidha
+              </a>
             </div>
           </motion.div>
         </section>
