@@ -887,9 +887,9 @@ function CineVerseShowcase({ reduced }) {
               Cine<span className="animate-gradient-text bg-clip-text">Verse</span>
             </h3>
             <p className="max-w-2xl text-base leading-relaxed text-zinc-400 sm:text-lg">
-              A premium Netflix-inspired movie streaming platform built with React
-              and Firebase featuring movie discovery, watchlists, trailer integration,
-              authentication, and responsive design.
+              A Netflix-inspired streaming app designed for movie discovery,
+              personalized watchlists, and trailer browsing, with a polished
+              interface and smooth user experience across devices.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2 sm:mt-8">
@@ -949,6 +949,104 @@ function CineVerseShowcase({ reduced }) {
         </div>
       </motion.article>
     </div>
+  )
+}
+
+function AmbularShowcase({ reduced }) {
+  const focusAreas = [
+    "Product concept exploration",
+    "Modern UI design thinking",
+    "Responsive interface experimentation",
+    "Iterative learning and refinement",
+  ]
+
+  const tags = [
+    "Concept Project",
+    "UI/UX",
+    "Responsive Design",
+    "Modern Web Experience",
+  ]
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 48 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={viewport}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={reduced ? {} : { y: -6 }}
+      className="glass-panel relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-black/40 shadow-2xl shadow-violet-950/30 backdrop-blur-2xl sm:rounded-[2rem]"
+    >
+      <div
+        className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-violet-500/15 blur-[110px]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-purple-500/10 blur-[90px]"
+        aria-hidden
+      />
+
+      <div className="relative grid gap-8 p-6 sm:p-8 md:grid-cols-5 md:gap-10 md:p-10 lg:p-12">
+        <div className="md:col-span-3">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-violet-400">
+            Concept Project
+          </p>
+          <h3 className="font-display mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+            Ambular
+          </h3>
+          <p className="max-w-2xl text-base leading-relaxed text-zinc-400 sm:text-lg">
+            Ambular is a personal product concept focused on creating a polished,
+            user-friendly digital experience with a strong emphasis on design,
+            responsiveness, and practical frontend thinking.
+          </p>
+
+          <div className="mt-6 flex flex-wrap gap-2 sm:mt-8">
+            {tags.map((tag) => (
+              <motion.span
+                key={tag}
+                whileHover={reduced ? {} : { y: -2, scale: 1.02 }}
+                className="rounded-full border border-white/10 bg-white/[0.06] px-3.5 py-1.5 text-xs font-medium text-zinc-300 backdrop-blur-md transition-colors duration-300 hover:border-violet-400/35 hover:text-white sm:px-4 sm:py-2 sm:text-sm"
+              >
+                {tag}
+              </motion.span>
+            ))}
+          </div>
+
+          <div className="mt-8 flex flex-wrap gap-3 sm:mt-10">
+            <span className="inline-flex items-center rounded-full border border-violet-500/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 shadow-lg shadow-violet-950/30">
+              In Progress
+            </span>
+          </div>
+        </div>
+
+        <div className="md:col-span-2">
+          <div className="glass-panel h-full rounded-2xl p-5 sm:p-6">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
+              Focus Areas
+            </p>
+            <ul className="space-y-3 sm:space-y-4">
+              {focusAreas.map((item, i) => (
+                <motion.li
+                  key={item}
+                  initial={{ opacity: 0, x: 12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={viewport}
+                  transition={{ duration: 0.4, delay: i * 0.08 }}
+                  whileHover={reduced ? {} : { x: 4 }}
+                  className="flex items-start gap-3 rounded-xl border border-white/5 bg-white/[0.03] px-4 py-3 transition duration-300 hover:border-violet-400/25 hover:bg-violet-500/5"
+                >
+                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-violet-500/20 text-violet-300">
+                    <FaCheck className="text-[10px]" />
+                  </span>
+                  <span className="text-sm font-medium text-zinc-200 sm:text-base">
+                    {item}
+                  </span>
+                </motion.li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </motion.article>
   )
 }
 
@@ -1089,7 +1187,7 @@ export default function App() {
                 transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
                 className="mb-4 text-xs font-semibold uppercase tracking-[0.35em] text-purple-400 sm:text-sm sm:tracking-[0.4em]"
               >
-                Aspiring Software Developer
+                Aspiring Full Stack Developer
               </motion.p>
 
               <motion.div
@@ -1108,11 +1206,14 @@ export default function App() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={loaded ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.75, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-                className="font-display text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
+                className="font-display text-4xl font-extrabold leading-[1.04] tracking-[-0.04em] sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.2rem]"
               >
-                <span className="block text-white">Building Modern</span>
-                <span className="mt-1 block animate-gradient-text bg-clip-text">
-                  Digital Experiences
+                <span className="block text-white">Aspiring Full Stack</span>
+                <span className="mt-2 block animate-gradient-text bg-clip-text">
+                  Developer
+                </span>
+                <span className="mt-2 block text-zinc-200 text-xl font-semibold tracking-[0.08em] uppercase sm:text-2xl md:text-3xl">
+                  Computer Science Graduate
                 </span>
               </motion.h1>
 
@@ -1122,9 +1223,12 @@ export default function App() {
                 transition={{ duration: 0.7, delay: 0.2 }}
                 className="mt-8 max-w-2xl text-base leading-relaxed text-zinc-400 sm:text-lg md:mt-10"
               >
-                Passionate about crafting elegant web applications, premium UI
-                experiences, and scalable digital products using React, Flutter,
-                and modern technologies.
+                I build responsive web and mobile applications with a focus on
+                clean interfaces, practical functionality, and user-centered design.
+                My hands-on work includes SafeWatch AI, an intelligent
+                surveillance platform, and Ambular, a concept project focused on
+                creating modern digital experiences, alongside full-stack projects
+                like CineVerse.
               </motion.p>
 
               <motion.div
@@ -1259,7 +1363,7 @@ export default function App() {
                 About Me
               </p>
               <h2 className="font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
-                Passionate About Building Beautiful Digital Products
+                Building practical solutions with a strong foundation in software development
               </h2>
             </motion.div>
 
@@ -1271,14 +1375,18 @@ export default function App() {
               className="glass-panel rounded-3xl p-6 sm:p-8"
             >
               <p className="mb-6 text-base leading-relaxed text-zinc-400 sm:text-lg">
-                I’m a Computer Science graduate passionate about frontend
-                engineering, UI/UX design, and creating impactful digital
-                experiences with modern web technologies.
+                I’m a recent Computer Science graduate based in Abu Dhabi, UAE,
+                actively seeking entry-level opportunities in software development.
+              </p>
+              <p className="mb-6 text-base leading-relaxed text-zinc-400 sm:text-lg">
+                Through hands-on projects such as SafeWatch AI, CineVerse, and
+                ongoing concept work like Ambular, I’ve gained practical experience
+                in building responsive interfaces, functional digital products, and
+                user-focused solutions.
               </p>
               <p className="text-base leading-relaxed text-zinc-400 sm:text-lg">
-                I enjoy transforming ideas into elegant, responsive, and
-                user-focused applications with smooth interactions and premium
-                design systems.
+                I’m eager to learn, work collaboratively, and continue growing as a
+                developer while contributing to real-world products and teams.
               </p>
             </motion.div>
           </div>
@@ -1306,28 +1414,27 @@ export default function App() {
               </h2>
             </motion.div>
 
-            <div className="grid gap-6 md:grid-cols-3 md:gap-8">
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 md:gap-8">
               {[
                 {
                   title: "Frontend",
                   border: "hover:border-purple-500/45 hover:shadow-purple-500/10",
-                  items: ["React", "JavaScript", "Tailwind CSS", "HTML", "CSS"],
+                  items: ["React", "JavaScript", "Tailwind CSS", "HTML", "CSS", "Flutter"],
                 },
                 {
                   title: "Backend",
                   border: "hover:border-blue-500/45 hover:shadow-blue-500/10",
-                  items: [
-                    "Node.js",
-                    "Express.js",
-                    "MongoDB",
-                    "Firebase",
-                    "MySQL",
-                  ],
+                  items: ["Node.js", "Express.js", "Python", "Firebase"],
+                },
+                {
+                  title: "Databases",
+                  border: "hover:border-cyan-400/40 hover:shadow-cyan-500/10",
+                  items: ["MongoDB", "MySQL", "Firebase"],
                 },
                 {
                   title: "Tools & Platforms",
-                  border: "hover:border-cyan-400/40 hover:shadow-cyan-500/10",
-                  items: ["GitHub", "VS Code", "Cursor AI", "Postman", "Vercel"],
+                  border: "hover:border-violet-400/40 hover:shadow-violet-500/10",
+                  items: ["GitHub", "VS Code", "Postman", "Vercel"],
                 },
               ].map((col, ci) => (
                 <motion.div
@@ -1379,31 +1486,7 @@ export default function App() {
             <div className="flex flex-col gap-8 md:gap-10">
               <SafeWatchShowcase reduced={reduced} />
               <CineVerseShowcase reduced={reduced} />
-
-              <motion.article
-                initial={{ opacity: 0, y: 48 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={viewport}
-                transition={{ duration: 0.6, delay: 0.12 }}
-                aria-label="Ambular — coming soon"
-                className="glass-panel relative flex min-h-[280px] flex-col overflow-hidden rounded-[1.75rem] border border-dashed border-white/15 sm:min-h-[320px] sm:rounded-[2rem]"
-              >
-                <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-white/[0.03] via-transparent to-blue-500/5 px-6 py-14">
-                  <div
-                    className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(139,92,246,0.08),transparent_70%)]"
-                    aria-hidden
-                  />
-                  <p className="relative mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-zinc-500">
-                    Coming Soon
-                  </p>
-                  <h3 className="font-display relative text-2xl font-bold tracking-tight text-white/70 sm:text-3xl">
-                    Ambular
-                  </h3>
-                  <p className="relative mt-3 max-w-xs text-center text-sm text-zinc-500">
-                    Reserved for the next featured project
-                  </p>
-                </div>
-              </motion.article>
+              <AmbularShowcase reduced={reduced} />
             </div>
           </div>
         </section>
